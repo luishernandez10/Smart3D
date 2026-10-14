@@ -1,3 +1,4 @@
+import RequireAdmin from "./components/RequireAdmin";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -52,13 +53,13 @@ function AppWrapper() {
           <Route path="/robokids" element={<RoboKidsPage />} />
           <Route path="/robojuniors" element={<RoboJuniorsPage />} />
           <Route path="/familia-smart" element={<FamiliaSmart />} />
-          <Route path="/campus" element={<Campus />} />
-          <Route path="/inscripciones" element={<Inscripciones />} />
-          <Route path="/admintaller" element={<AdminTaller />} />
-          <Route path="/docentes" element={<Docentes />} />
-          <Route path="/sedes" element={<Sedes />} />
-          <Route path="/sedes/:nombre" element={<SedeDetalle />} />
-          <Route path="/detalle-proyecto/:nombre" element={<ProyectoDetalle />} />
+          <Route path="/campus" element={<RequireAdmin><Campus /></RequireAdmin>} />
+          <Route path="/inscripciones" element={<RequireAdmin><Inscripciones /></RequireAdmin>} />
+          <Route path="/admintaller" element={<RequireAdmin><AdminTaller /></RequireAdmin>} />
+          <Route path="/docentes" element={<RequireAdmin><Docentes /></RequireAdmin>} />
+          <Route path="/sedes" element={<RequireAdmin><Sedes /></RequireAdmin>} />
+          <Route path="/sedes/:nombre" element={<RequireAdmin><SedeDetalle /></RequireAdmin>} />
+          <Route path="/detalle-proyecto/:nombre" element={<RequireAdmin><ProyectoDetalle /></RequireAdmin>} />
        
         </Routes>
       </div>

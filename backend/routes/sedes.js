@@ -19,8 +19,7 @@ router.post('/', async (req, res) => {
 
     res.status(201).json(nuevaSede);
   } catch (error) {
-    console.error('❌ Error al registrar sede:', error);
-    res.status(500).json({ error: 'Error al registrar sede', detalles: error.message });
+    res.status(500).json({ error: 'Error al registrar sede' });
   }
 });
 
@@ -32,8 +31,7 @@ router.get('/', async (req, res) => {
     });
     res.json(sedes);
   } catch (error) {
-    console.error('❌ Error al obtener sedes:', error);
-    res.status(500).json({ error: 'Error al obtener sedes', detalles: error.message });
+    res.status(500).json({ error: 'Error al obtener sedes' });
   }
 });
 
@@ -50,8 +48,7 @@ router.put('/:id', async (req, res) => {
 
     res.json(sedeActualizada);
   } catch (error) {
-    console.error('❌ Error al actualizar sede:', error);
-    res.status(500).json({ error: 'Error al actualizar sede', detalles: error.message });
+    res.status(500).json({ error: 'Error al actualizar sede' });
   }
 });
 
@@ -64,8 +61,7 @@ router.delete('/:id', async (req, res) => {
     });
     res.json(sedeEliminada);
   } catch (error) {
-    console.error('❌ Error al eliminar sede:', error);
-    res.status(500).json({ error: 'Error al eliminar sede', detalles: error.message });
+    res.status(500).json({ error: 'Error al eliminar sede' });
   }
 });
 

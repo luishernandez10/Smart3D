@@ -1,3 +1,4 @@
+import { apiFetch } from "../api";
 import React, { useState, useEffect } from "react";
 import "./Docentes.css";
 import AdminHeader from "../components/AdminHeader";
@@ -27,7 +28,7 @@ const Docentes = () => {
   useEffect(() => {
     const cargarDocentes = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/docentes`);
+        const res = await apiFetch(`${API_URL}/api/docentes`);
         if (!res.ok) throw new Error("No se pudo cargar la lista de docentes");
         const data = await res.json();
         setListaDocentes(data);
@@ -49,12 +50,19 @@ const Docentes = () => {
   const pasoAnterior = () => setPasoActual(pasoActual - 1);
 
   const registrarDocente = async () => {
-    const { confirmarPassword, ...docenteSinConfirmar } = datosDocente;
+    const docenteSinConfirmar = Object.fromEntries(
+      ['nombres', 'apellidos', 'fechaNacimiento', 'telefono', 'direccion', 'fechaContrato', 'rol', 'username', 'password']
+        .map(key => [key, datosDocente[key]])
+    );
+    if (datosDocente.password !== datosDocente.confirmarPassword) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
 
     if (editandoIndex !== null) {
       const id = listaDocentes[editandoIndex].id;
       try {
-        const res = await fetch(`${API_URL}/api/docentes/${id}`, {
+        const res = await apiFetch(`${API_URL}/api/docentes/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(docenteSinConfirmar)
@@ -72,7 +80,7 @@ const Docentes = () => {
       }
     } else {
       try {
-        const res = await fetch(`${API_URL}/api/docentes`, {
+        const res = await apiFetch(`${API_URL}/api/docentes`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(docenteSinConfirmar)
@@ -106,7 +114,7 @@ const Docentes = () => {
 
   const eliminarDocente = async (id) => {
     try {
-      const res = await fetch(`${API_URL}/api/docentes/${id}`, {
+      const res = await apiFetch(`${API_URL}/api/docentes/${id}`, {
         method: "DELETE"
       });
       if (!res.ok) throw new Error("Error al eliminar docente");
@@ -121,6 +129,7 @@ const Docentes = () => {
     const docente = listaDocentes[index];
     setDatosDocente({
       ...docente,
+      password: "",
       fechaNacimiento: docente.fechaNacimiento?.substring(0, 10),
       fechaContrato: docente.fechaContrato?.substring(0, 10),
       confirmarPassword: ""

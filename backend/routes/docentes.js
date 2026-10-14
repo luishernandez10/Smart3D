@@ -4,6 +4,7 @@ const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 
 const prisma = new PrismaClient();
+const publicFields = { id: true, nombres: true, apellidos: true, fechaNacimiento: true, telefono: true, direccion: true, fechaContrato: true, rol: true, username: true, creadoEn: true };
 
 // ➕ Crear nuevo docente
 router.post('/', async (req, res) => {
@@ -34,6 +35,7 @@ router.post('/', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const nuevo = await prisma.docente.create({
+      select: publicFields,
       data: {
         nombres,
         apellidos,
@@ -49,8 +51,7 @@ router.post('/', async (req, res) => {
 
     res.status(201).json(nuevo);
   } catch (error) {
-    console.error('❌ Error al registrar docente:', error);
-    res.status(500).json({ error: 'Error al registrar docente', detalles: error.message });
+    res.status(500).json({ error: 'Error al registrar docente' });
   }
 });
 
@@ -58,12 +59,12 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const docentes = await prisma.docente.findMany({
+      select: publicFields,
       orderBy: { id: 'desc' }
     });
     res.json(docentes);
   } catch (error) {
-    console.error('❌ Error al obtener docentes:', error);
-    res.status(500).json({ error: 'Error al obtener docentes', detalles: error.message });
+    res.status(500).json({ error: 'Error al obtener docentes' });
   }
 });
 
@@ -91,13 +92,13 @@ router.put('/:id', async (req, res) => {
 
     const actualizado = await prisma.docente.update({
       where: { id },
-      data
+      data,
+      select: publicFields
     });
 
     res.json(actualizado);
   } catch (error) {
-    console.error('❌ Error al actualizar docente:', error);
-    res.status(500).json({ error: 'Error al actualizar docente', detalles: error.message });
+    res.status(500).json({ error: 'Error al actualizar docente' });
   }
 });
 
@@ -106,12 +107,12 @@ router.delete('/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const eliminado = await prisma.docente.delete({
-      where: { id }
+      where: { id },
+      select: publicFields
     });
     res.json(eliminado);
   } catch (error) {
-    console.error('❌ Error al eliminar docente:', error);
-    res.status(500).json({ error: 'Error al eliminar docente', detalles: error.message });
+    res.status(500).json({ error: 'Error al eliminar docente' });
   }
 });
 

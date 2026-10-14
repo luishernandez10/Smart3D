@@ -1,3 +1,4 @@
+import { apiFetch } from "../api";
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AdminHeader.css";
@@ -22,12 +23,16 @@ const AdminHeader = () => {
     // navigate("/editar-perfil"); // si ya tienes la ruta
   };
 
-  const handleCerrarSesion = () => {
-    localStorage.clear();
-    navigate("/login");
+  const handleCerrarSesion = async () => {
+    try { await apiFetch(import.meta.env.VITE_API_URL + '/api/auth/logout', { method: 'POST' }); }
+    catch { /* La sesión del servidor caduca aunque falle la conexión. */ }
+    finally {
+      sessionStorage.removeItem('token'); sessionStorage.removeItem('usuario'); localStorage.removeItem('usuario');
+      navigate("/login");
+    }
   };
 
-  const usuario = JSON.parse(localStorage.getItem("usuario")) || { username: "Admin", rol: "Sin rol" };
+  const usuario = JSON.parse(sessionStorage.getItem("usuario")) || { username: "Admin", rol: "Sin rol" };
 
   return (
     <header className="admin-header">

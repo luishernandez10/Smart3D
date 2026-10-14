@@ -1,3 +1,4 @@
+import { apiFetch } from "../api";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Sedes.css";
@@ -23,7 +24,7 @@ const Sedes = () => {
   useEffect(() => {
     const cargarSedes = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/sedes`);
+        const res = await apiFetch(`${API_URL}/api/sedes`);
         const data = await res.json();
         setSedes(data);
       } catch (error) {
@@ -49,7 +50,7 @@ const Sedes = () => {
         : `${API_URL}/api/sedes`;
       const metodo = editandoId ? "PUT" : "POST";
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method: metodo,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(nuevaSede)
@@ -84,7 +85,7 @@ const Sedes = () => {
     if (!window.confirm("¿Estás seguro de eliminar esta sede?")) return;
 
     try {
-      const res = await fetch(`${API_URL}/api/sedes/${id}`, {
+      const res = await apiFetch(`${API_URL}/api/sedes/${id}`, {
         method: "DELETE"
       });
       if (!res.ok) throw new Error("Error al eliminar sede");
