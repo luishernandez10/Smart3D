@@ -2,7 +2,7 @@
 import React from 'react';
 import './card.css';
 
-const Card = ({ image, thumb, title, status }) => {
+const Card = ({ image, title, status }) => {
   return (
     <li>
       <a href="#" className="card">

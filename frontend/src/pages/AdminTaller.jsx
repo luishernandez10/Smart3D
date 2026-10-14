@@ -1,3 +1,4 @@
+import { apiFetch } from "../api";
 import React, { useState, useEffect } from "react";
 import "./AdminTaller.css";
 import AdminHeader from "../components/AdminHeader";
@@ -18,7 +19,7 @@ const AdminTaller = () => {
 
   const obtenerTalleres = async () => {
     try {
-      const res = await fetch(API_URL);
+      const res = await apiFetch(API_URL);
       const data = await res.json();
       setTalleres(data);
     } catch (error) {
@@ -30,7 +31,7 @@ const AdminTaller = () => {
     if (!nuevoTaller.nombre || !nuevoTaller.informacion) return;
 
     try {
-      const res = await fetch(API_URL, {
+      const res = await apiFetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(nuevoTaller),
@@ -50,7 +51,7 @@ const AdminTaller = () => {
 
   const handleEliminar = async (id) => {
     try {
-      await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+      await apiFetch(`${API_URL}/${id}`, { method: "DELETE" });
       setTalleres(talleres.filter((t) => t.id !== id));
     } catch (error) {
       console.error("Error al eliminar taller:", error);
@@ -60,7 +61,7 @@ const AdminTaller = () => {
   const handleEditar = async () => {
     if (!nuevoTaller.nombre || !nuevoTaller.informacion) return;
     try {
-      const res = await fetch(`${API_URL}/${tallerSeleccionado.id}`, {
+      const res = await apiFetch(`${API_URL}/${tallerSeleccionado.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(nuevoTaller),

@@ -1,6 +1,6 @@
 // hash_docentes.js
 const { PrismaClient } = require('@prisma/client');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const prisma = new PrismaClient();
 
@@ -9,7 +9,7 @@ async function hashPasswords() {
     const docentes = await prisma.docente.findMany();
 
     for (const docente of docentes) {
-      if (!docente.password.startsWith('$2b$')) {
+      if (!/^\$2[aby]\$\d{2}\$[./A-Za-z0-9]{53}$/.test(docente.password)) {
         const hashedPassword = await bcrypt.hash(docente.password, 10);
 
         await prisma.docente.update({
@@ -23,7 +23,8 @@ async function hashPasswords() {
 
     console.log('✅ Todas las contraseñas han sido hasheadas.');
   } catch (error) {
-    console.error('❌ Error:', error);
+    console.error('Error al migrar contraseñas');
+    process.exitCode = 1;
   } finally {
     await prisma.$disconnect();
   }

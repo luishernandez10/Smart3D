@@ -6,7 +6,8 @@
   "scripts": {
     "prestart": "npx prisma generate",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "node --test"
   },
   "keywords": [],
   "author": "",

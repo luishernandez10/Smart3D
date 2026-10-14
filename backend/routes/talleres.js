@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
     const talleres = await prisma.taller.findMany();
     res.json(talleres);
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener talleres", detalles: error.message });
+    res.status(500).json({ error: "Error al obtener talleres" });
   }
 });
 
@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
     });
     res.json(nuevoTaller);
   } catch (error) {
-    res.status(500).json({ error: "Error al crear taller", detalles: error.message });
+    res.status(500).json({ error: "Error al crear taller" });
   }
 });
 
@@ -37,7 +37,7 @@ router.put("/:id", async (req, res) => {
     });
     res.json(actualizado);
   } catch (error) {
-    res.status(500).json({ error: "Error al actualizar taller", detalles: error.message });
+    res.status(500).json({ error: "Error al actualizar taller" });
   }
 });
 
@@ -48,7 +48,7 @@ router.delete("/:id", async (req, res) => {
     await prisma.taller.delete({ where: { id } });
     res.json({ mensaje: "Taller eliminado" });
   } catch (error) {
-    res.status(500).json({ error: "Error al eliminar taller", detalles: error.message });
+    res.status(500).json({ error: "Error al eliminar taller" });
   }
 });
 

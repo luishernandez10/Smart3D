@@ -40,7 +40,7 @@ router.post('/robokids', async (req, res) => {
 
     res.status(201).json(nueva);
   } catch (err) {
-    res.status(500).json({ error: 'Error al registrar en Robo Kids', detalles: err.message });
+    res.status(500).json({ error: 'Error al registrar en Robo Kids' });
   }
 });
 
@@ -64,7 +64,7 @@ router.post('/robojuniors', async (req, res) => {
 
     res.status(201).json(nueva);
   } catch (err) {
-    res.status(500).json({ error: 'Error al registrar en Robo Juniors', detalles: err.message });
+    res.status(500).json({ error: 'Error al registrar en Robo Juniors' });
   }
 });
 
@@ -100,7 +100,7 @@ router.patch('/robokids/:id', async (req, res) => {
     });
     res.json(actualizado);
   } catch (err) {
-    res.status(500).json({ error: 'Error al actualizar inscripción Robo Kids', detalles: err.message });
+    res.status(500).json({ error: 'Error al actualizar inscripción Robo Kids' });
   }
 });
 
@@ -114,7 +114,7 @@ router.patch('/robojuniors/:id', async (req, res) => {
     });
     res.json(actualizado);
   } catch (err) {
-    res.status(500).json({ error: 'Error al actualizar inscripción Robo Juniors', detalles: err.message });
+    res.status(500).json({ error: 'Error al actualizar inscripción Robo Juniors' });
   }
 });
 

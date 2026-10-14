@@ -21,10 +21,12 @@ const Login = () => {
       });
 
       if (res.status === 200) {
-        localStorage.setItem('usuario', JSON.stringify(res.data.docente));
+        sessionStorage.setItem('token', res.data.token);
+        sessionStorage.setItem('usuario', JSON.stringify(res.data.docente));
+        localStorage.removeItem('usuario');
         navigate('/campus');
       }
-    } catch (err) {
+    } catch {
       setError('Usuario o contraseña incorrectos');
     }
   };

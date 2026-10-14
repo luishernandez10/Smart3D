@@ -1,7 +1,8 @@
+import { apiFetch } from "../api";
 import React, { useState, useEffect } from "react";
 import "./Inscripciones.css";
 import AdminHeader from "../components/AdminHeader";
-import axios from "axios";
+import { api as axios } from "../api";
 
 const API_URL = import.meta.env.VITE_API_URL;
 console.log("🌐 API_URL Inscripciones:", API_URL);
@@ -52,7 +53,7 @@ const Inscripciones = () => {
     const fechaValida = formData.fecha ? new Date(formData.fecha).toISOString() : null;
 
     try {
-      await fetch(endpoint, {
+      await apiFetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
